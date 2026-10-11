@@ -1,0 +1,6 @@
+{
+  "name": "Viva Italian Restaurant Bar & Pizzeria",
+  "description": "Premium modern website concept for Viva Italian Restaurant Bar & Pizzeria, Leeds LS1 7HG.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
