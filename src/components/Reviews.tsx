@@ -1,28 +1,20 @@
 import React, { useEffect, useRef } from 'react';
-import { Star, Quote, CheckCircle, MessageSquare } from 'lucide-react';
+import { Star, CheckCircle, Award } from 'lucide-react';
 import { TESTIMONIALS, RESTAURANT_INFO } from '../data/restaurantData.ts';
-import { initFadeUp, initStaggerReveal } from '../utils/animations.ts';
+import { initFadeUp } from '../utils/animations.ts';
 
 export const Reviews: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (headerRef.current) {
       initFadeUp(headerRef.current, { yOffset: 25, duration: 0.8 });
     }
-    if (gridRef.current) {
-      initStaggerReveal(gridRef.current, '.review-card', {
-        stagger: 0.1,
-        yOffset: 25,
-        duration: 0.7,
-      });
-    }
   }, []);
 
   return (
     <section id="reviews" className="py-24 bg-[#100F0D] relative overflow-hidden">
-      {/* Subtle background glow */}
+      {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C99742]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -32,19 +24,19 @@ export const Reviews: React.FC = () => {
           <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#D8A651] mb-2">
             <span className="font-cinzel">Recensioni dei Clienti</span>
             <span aria-hidden="true" className="text-[#8E8474]">·</span>
-            <span>Guest Voices</span>
+            <span>Real Customer Reviews</span>
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#F8E7C9]">
             Loved by Leeds Diners
           </h2>
 
-          <p className="mt-4 text-[#A39A8B] text-sm sm:text-base">
-            With over 600 verified reviews, discover why food enthusiasts across West Yorkshire rate Viva amongst the most authentic Italian dining experiences.
+          <p className="mt-4 text-[#A39A8B] text-sm sm:text-base leading-relaxed">
+            With nearly 600 verified reviews across Google and TripAdvisor, read what real guests have to say about dining with us at 9-11 Bridge End.
           </p>
         </div>
 
-        {/* Rating Score Banner Highlight */}
+        {/* Rating Score Banner Highlight with Verified Spaces */}
         <div className="mt-12 max-w-3xl mx-auto bg-[#181512] border border-[#C99742]/30 rounded-2xl p-6 sm:p-8 shadow-xl">
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
             
@@ -76,9 +68,9 @@ export const Reviews: React.FC = () => {
             {/* Right Rating Breakdown */}
             <div className="sm:col-span-7 space-y-2.5">
               {[
-                { label: 'Food & Culinary Authenticity', score: '4.8 / 5.0', pct: 96 },
-                { label: 'Trattoria Ambiance & Warmth', score: '4.7 / 5.0', pct: 94 },
-                { label: 'Friendly Hospitality & Service', score: '4.8 / 5.0', pct: 96 },
+                { label: 'Food & Fresh Culinary Quality', score: '4.8 / 5.0', pct: 96 },
+                { label: 'Intimate Trattoria Ambiance', score: '4.7 / 5.0', pct: 94 },
+                { label: 'Warm Family Service & Hospitality', score: '4.8 / 5.0', pct: 96 },
               ].map((item, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs text-[#DFD9CC] mb-1">
@@ -98,15 +90,12 @@ export const Reviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Review Cards Grid */}
-        <div
-          ref={gridRef}
-          className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
+        {/* Review Cards Grid with Verified Spaces Around Bullet Dot */}
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
           {TESTIMONIALS.map((review) => (
             <div
               key={review.id}
-              className="review-card bg-[#161412] border border-[#26211C] hover:border-[#C99742]/40 rounded-xl p-6 sm:p-7 transition-all duration-300 flex flex-col justify-between shadow-lg relative group"
+              className="bg-[#161412] border border-[#26211C] hover:border-[#C99742]/40 rounded-2xl p-6 sm:p-7 transition-all duration-300 flex flex-col justify-between shadow-xl relative group"
             >
               <div>
                 {/* Header row: stars & source with verified spaces around dot */}
@@ -132,36 +121,25 @@ export const Reviews: React.FC = () => {
                 </p>
               </div>
 
-              {/* Author footer */}
+              {/* Author & Dishes Mentioned */}
               <div className="mt-6 pt-4 border-t border-[#221E1A] flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#2C2621] border border-[#C99742]/30 flex items-center justify-center font-serif font-bold text-xs text-[#E5B869]">
-                    {review.author.charAt(0)}
+                <div>
+                  <div className="text-xs font-semibold text-[#F8E7C9]">
+                    {review.author}
                   </div>
-                  <div>
-                    <div className="text-xs font-semibold text-[#DFD9CC]">{review.author}</div>
-                    <div className="text-[10px] text-[#8E8474]">Verified Diner · Leeds</div>
+                  <div className="text-[11px] text-[#8E8474]">
+                    Verified Diner · Leeds
                   </div>
                 </div>
 
-                <Quote className="w-5 h-5 text-[#C99742]/20" />
+                {review.dishMentioned && (
+                  <span className="text-[10px] text-[#C99742] bg-[#1E1A16] px-2.5 py-1 rounded-md border border-[#C99742]/20 font-medium">
+                    {review.dishMentioned}
+                  </span>
+                )}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Google Reviews Trust Footer */}
-        <div className="mt-12 text-center">
-          <a
-            href="https://www.google.com/search?q=Viva+Italian+Restaurant+Bar+%26+Pizzeria+Leeds"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs text-[#D8A651] hover:text-[#F8E7C9] transition-colors"
-          >
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>{`Read all ${RESTAURANT_INFO.reviewCount}+ reviews on Google`}</span>
-            <span aria-hidden="true">→</span>
-          </a>
         </div>
 
       </div>

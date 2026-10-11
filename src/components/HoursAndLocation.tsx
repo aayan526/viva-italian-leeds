@@ -1,35 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MapPin, Clock, Phone, Navigation, Train, Car, Compass } from 'lucide-react';
+import { MapPin, Clock, Phone, Navigation, Train, Car } from 'lucide-react';
 import { RESTAURANT_INFO } from '../data/restaurantData.ts';
 import { initFadeUp } from '../utils/animations.ts';
+
+interface DaySchedule {
+  day: string;
+  short: string;
+  hours: string;
+  open: string;
+  close: string;
+}
+
+const SCHEDULE_DATA: DaySchedule[] = [
+  { day: "Monday", short: "Mon", hours: "16:00–22:00", open: "16:00", close: "22:00" },
+  { day: "Tuesday", short: "Tue", hours: "16:00–22:00", open: "16:00", close: "22:00" },
+  { day: "Wednesday", short: "Wed", hours: "16:00–22:00", open: "16:00", close: "22:00" },
+  { day: "Thursday", short: "Thu", hours: "16:00–22:00", open: "16:00", close: "22:00" },
+  { day: "Friday", short: "Fri", hours: "12:00–22:00", open: "12:00", close: "22:00" },
+  { day: "Saturday", short: "Sat", hours: "12:00–22:00", open: "12:00", close: "22:00" },
+  { day: "Sunday", short: "Sun", hours: "14:00–21:00", open: "14:00", close: "21:00" },
+];
 
 export const HoursAndLocation: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [currentDayName, setCurrentDayName] = useState('');
   const [isOpenNow, setIsOpenNow] = useState(false);
 
-  // Exact schedule definition matching business data
-  const scheduleRows = [
-    { day: "Monday", short: "Mon", hours: "16:00–22:00" },
-    { day: "Tuesday", short: "Tue", hours: "16:00–22:00" },
-    { day: "Wednesday", short: "Wed", hours: "16:00–22:00" },
-    { day: "Thursday", short: "Thu", hours: "16:00–22:00" },
-    { day: "Friday", short: "Fri", hours: "12:00–22:00" },
-    { day: "Saturday", short: "Sat", hours: "12:00–22:00" },
-    { day: "Sunday", short: "Sun", hours: "14:00–21:00" },
-  ];
-
   useEffect(() => {
     if (headerRef.current) {
       initFadeUp(headerRef.current, { yOffset: 25, duration: 0.8 });
     }
 
-    // Determine current day and open status based on current time
     const now = new Date();
     const day = now.toLocaleDateString('en-GB', { weekday: 'long' });
     setCurrentDayName(day);
 
-    const schedule = RESTAURANT_INFO.openingHours.find((h) => h.day === day);
+    const schedule = SCHEDULE_DATA.find((h) => h.day === day);
     if (schedule) {
       const [openHour, openMin] = schedule.open.split(':').map(Number);
       const [closeHour, closeMin] = schedule.close.split(':').map(Number);
@@ -55,15 +61,15 @@ export const HoursAndLocation: React.FC = () => {
           <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#D8A651] mb-2">
             <span className="font-cinzel">Dove Trovarci & Orari</span>
             <span aria-hidden="true" className="text-[#8E8474]">·</span>
-            <span>Visit Us</span>
+            <span>Visit Us In Leeds</span>
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#F8E7C9]">
             Hours & Location in Leeds
           </h2>
 
-          <p className="mt-4 text-[#A39A8B] text-sm sm:text-base">
-            Conveniently situated at the south end of Leeds Bridge, near the River Aire waterfront and 5 minutes from Leeds Station.
+          <p className="mt-4 text-[#A39A8B] text-sm sm:text-base leading-relaxed">
+            Find our restaurant at <strong>9-11 Bridge End, Leeds LS1 7HG</strong>, situated by Leeds Bridge and the River Aire. Just 300 yards from Leeds Corn Exchange and a 10-minute walk from the train and bus stations.
           </p>
         </div>
 
@@ -74,7 +80,7 @@ export const HoursAndLocation: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Live Status & Address Card */}
-            <div className="bg-[#181512] border border-[#2C2621] rounded-xl p-6 shadow-xl">
+            <div className="bg-[#181512] border border-[#2C2621] rounded-2xl p-6 shadow-xl">
               <div className="flex items-center justify-between pb-4 border-b border-[#241F1A]">
                 <div className="flex items-center gap-2">
                   <div
@@ -101,7 +107,7 @@ export const HoursAndLocation: React.FC = () => {
                       {RESTAURANT_INFO.address}
                     </div>
                     <div className="text-xs text-[#A39A8B] mt-0.5">
-                      Directly opposite Leeds Bridge · Waterfront District
+                      300 yards from Leeds Corn Exchange · LS1 7HG
                     </div>
                   </div>
                 </div>
@@ -114,12 +120,12 @@ export const HoursAndLocation: React.FC = () => {
                     </div>
                     <a
                       href={`tel:${RESTAURANT_INFO.phone.replace(/\s+/g, '')}`}
-                      className="text-sm font-medium text-[#E5B869] hover:text-[#F8E7C9] transition-colors mt-0.5 block"
+                      className="text-sm font-medium text-[#E5B869] hover:text-[#F8E7C9] transition-colors mt-0.5 block font-mono"
                     >
                       {RESTAURANT_INFO.phone}
                     </a>
                     <div className="text-xs text-[#8E8474] mt-0.5">
-                      Table reservations & inquiries welcome
+                      Table bookings & enquiries always welcome
                     </div>
                   </div>
                 </div>
@@ -131,7 +137,7 @@ export const HoursAndLocation: React.FC = () => {
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-md text-xs font-semibold uppercase tracking-wider text-[#100F0D] bg-gradient-to-r from-[#D8A651] to-[#E5B869] hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-3 px-4 rounded-lg text-xs font-semibold uppercase tracking-wider text-[#100F0D] bg-gradient-to-r from-[#D8A651] to-[#E5B869] hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <Navigation className="w-4 h-4" />
                   <span>Get Directions on Google Maps</span>
@@ -140,7 +146,7 @@ export const HoursAndLocation: React.FC = () => {
             </div>
 
             {/* Opening Hours Schedule Card */}
-            <div className="bg-[#181512] border border-[#2C2621] rounded-xl p-6 shadow-xl">
+            <div className="bg-[#181512] border border-[#2C2621] rounded-2xl p-6 shadow-xl">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#241F1A]">
                 <div className="flex items-center gap-2 text-sm font-serif font-bold text-[#F8E7C9]">
                   <Clock className="w-4 h-4 text-[#C99742]" />
@@ -150,119 +156,129 @@ export const HoursAndLocation: React.FC = () => {
               </div>
 
               {/* Summary Pill Row matching Footer */}
-              <div className="mb-4 grid grid-cols-3 gap-2 p-2.5 bg-[#141210] rounded-lg border border-[#26211C] text-center text-[11px]">
+              <div className="mb-5 grid grid-cols-3 gap-2 p-3 bg-[#141210] rounded-xl border border-[#26211C] text-center text-xs">
                 <div className="border-r border-[#26211C] pr-1">
-                  <div className="text-[#8E8474]">Mon – Thu</div>
-                  <div className="font-mono text-[#F8E7C9] font-medium mt-0.5">16:00–22:00</div>
+                  <div className="text-[#8E8474] text-[11px]">Mon – Thu</div>
+                  <div className="font-mono text-[#F8E7C9] font-bold mt-0.5 text-xs">16:00–22:00</div>
                 </div>
                 <div className="border-r border-[#26211C] px-1">
-                  <div className="text-[#8E8474]">Fri – Sat</div>
-                  <div className="font-mono text-[#F8E7C9] font-medium mt-0.5">12:00–22:00</div>
+                  <div className="text-[#8E8474] text-[11px]">Fri – Sat</div>
+                  <div className="font-mono text-[#F8E7C9] font-bold mt-0.5 text-xs">12:00–22:00</div>
                 </div>
                 <div className="pl-1">
-                  <div className="text-[#8E8474]">Sunday</div>
-                  <div className="font-mono text-[#F8E7C9] font-medium mt-0.5">14:00–21:00</div>
+                  <div className="text-[#8E8474] text-[11px]">Sunday</div>
+                  <div className="font-mono text-[#F8E7C9] font-bold mt-0.5 text-xs">14:00–21:00</div>
                 </div>
               </div>
 
-              {/* Explicit Daily Rows for Monday through Sunday */}
+              {/* Explicit Daily Rows for Every Single Day with Guaranteed Hours Rendering */}
               <div className="divide-y divide-[#221E1A] text-xs">
-                {scheduleRows.map((item) => {
+                {SCHEDULE_DATA.map((item) => {
                   const isToday = item.day === currentDayName;
                   return (
                     <div
                       key={item.day}
-                      className={`py-3 flex items-center justify-between ${
+                      className={`py-3.5 px-3 flex items-center justify-between gap-3 rounded-lg transition-colors ${
                         isToday
-                          ? 'text-[#E5B869] font-semibold bg-[#221E1A]/80 px-3 rounded'
-                          : 'text-[#DFD9CC]'
+                          ? 'bg-[#241F1A] border border-[#C99742]/40 text-[#E5B869]'
+                          : 'text-[#DFD9CC] hover:bg-[#1C1814]'
                       }`}
                     >
+                      {/* Left: Day Name & Short Code */}
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-[#F8E7C9]">{item.day}</span>
-                        <span className="text-xs text-[#8E8474]">({item.short})</span>
+                        <span className="font-semibold text-sm text-[#F8E7C9]">
+                          {item.day}
+                        </span>
+                        <span className="text-xs text-[#8E8474]">
+                          ({item.short})
+                        </span>
                         {isToday && (
-                          <span className="text-[10px] text-[#C99742] uppercase tracking-wider font-sans bg-[#141210] px-1.5 py-0.5 rounded border border-[#C99742]/30">
+                          <span className="text-[10px] text-[#100F0D] bg-[#E5B869] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm">
                             Today
                           </span>
                         )}
                       </div>
-                      <span className="font-mono text-xs sm:text-sm font-bold text-[#F8E7C9] bg-[#141210] px-2.5 py-1 rounded border border-[#C99742]/30 shrink-0">
-                        {item.hours}
-                      </span>
+
+                      {/* Right: Explicit Hours String Guaranteed to Render */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="font-mono text-xs sm:text-sm font-bold text-[#F8E7C9] bg-[#12100E] px-3 py-1 rounded-md border border-[#2C2621]">
+                          {item.hours}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
               </div>
 
               <div className="mt-4 pt-3 border-t border-[#221E1A] text-[11px] text-[#8E8474] leading-relaxed">
-                Kitchen closes 30 minutes prior to closing time. Last table bookings accepted 1 hour before close.
+                Kitchen accepts last table orders 30 minutes before close. Walk-ins and reservations both welcome.
               </div>
             </div>
 
             {/* Transport & Access Notes */}
             <div className="grid grid-cols-2 gap-3 text-xs text-[#A39A8B]">
-              <div className="bg-[#181512] p-3.5 rounded-lg border border-[#221E1A] flex items-start gap-2.5">
+              <div className="bg-[#181512] p-4 rounded-xl border border-[#221E1A] flex items-start gap-2.5">
                 <Train className="w-4 h-4 text-[#C99742] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-[#F8E7C9] font-medium">By Rail</div>
-                  <div className="text-[11px] mt-0.5">5 min walk from Leeds Station</div>
+                  <div className="text-[#F8E7C9] font-medium">Train & Bus</div>
+                  <div className="text-[11px] mt-0.5">10 min walk from stations</div>
                 </div>
               </div>
-              <div className="bg-[#181512] p-3.5 rounded-lg border border-[#221E1A] flex items-start gap-2.5">
+              <div className="bg-[#181512] p-4 rounded-xl border border-[#221E1A] flex items-start gap-2.5">
                 <Car className="w-4 h-4 text-[#C99742] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-[#F8E7C9] font-medium">Parking</div>
-                  <div className="text-[11px] mt-0.5">Crown Point & on-street bays</div>
+                  <div className="text-[#F8E7C9] font-medium">Corn Exchange</div>
+                  <div className="text-[11px] mt-0.5">300 yards away</div>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Google Maps Embed Frame & Interactive View */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#181512] border border-[#2C2621] rounded-xl overflow-hidden shadow-2xl h-[560px] flex flex-col">
-              
-              {/* Map Header Bar */}
-              <div className="p-4 bg-[#1F1B16] border-b border-[#2C2621] flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2 text-[#DFD9CC]">
-                  <Compass className="w-4 h-4 text-[#C99742]" />
-                  <span className="font-medium">9-11 Bridge End, Leeds LS1 7HG</span>
+          {/* Right Column: Google Maps Embed & Interactive Card */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="bg-[#181512] border border-[#2C2621] rounded-2xl overflow-hidden shadow-2xl">
+              {/* Map Frame Header */}
+              <div className="bg-[#141210] px-5 py-3.5 border-b border-[#241F1A] flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#C99742]" />
+                  <span className="text-xs font-serif font-bold text-[#F8E7C9]">
+                    9-11 Bridge End, Leeds LS1 7HG
+                  </span>
                 </div>
-                <a
-                  href={googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#E5B869] hover:underline flex items-center gap-1 font-medium"
-                >
-                  <span>Open Full Map</span>
-                  <span>↗</span>
-                </a>
+                <span className="text-[11px] text-[#A39A8B]">Leeds City Centre</span>
               </div>
 
-              {/* Map Iframe */}
-              <div className="relative flex-1 w-full bg-[#100F0D]">
+              {/* Google Maps iFrame */}
+              <div className="relative h-[380px] sm:h-[460px] w-full bg-[#100F0D]">
                 <iframe
-                  title="Viva Italian Restaurant Location Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2356.666114620573!2d-1.544855423377755!3d53.79339284144365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795c3d258b6cb1%3A0xe5aa658a58eb2260!2s9-11%20Bridge%20End%2C%20Leeds%20LS1%207HG!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk"
+                  title="Viva Italian Restaurant Google Maps Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2356.5516905581977!2d-1.5448554232386926!3d53.793393041416484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795c192d192079%3A0xe543b3ae96924295!2sViva%20Italian%20Restaurant!5e0!3m2!1sen!2suk!4v1714000000000!5m2!1sen!2suk"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)' }}
-                  allowFullScreen={false}
+                  style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(1.15) brightness(0.85)' }}
+                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="w-full h-full"
                 />
-
-                {/* Map Overlay Card Badge */}
-                <div className="absolute bottom-4 left-4 bg-[#141210]/95 backdrop-blur-md border border-[#C99742]/40 p-3.5 rounded-lg shadow-2xl max-w-xs text-xs pointer-events-none">
-                  <div className="font-serif font-bold text-sm text-[#F8E7C9]">Viva Italian Restaurant</div>
-                  <div className="text-[11px] text-[#A39A8B] mt-0.5">Bar & Pizzeria · 9-11 Bridge End</div>
-                  <div className="text-[10px] text-[#E5B869] mt-1 font-medium">★ 4.7 (~600 Google reviews)</div>
-                </div>
               </div>
 
+              {/* Card Footer Location Features */}
+              <div className="p-4 bg-[#141210] border-t border-[#241F1A] grid grid-cols-3 gap-2 text-center text-[11px] text-[#DFD9CC]">
+                <div className="p-2 rounded bg-[#181512] border border-[#221E1A]">
+                  <strong className="text-[#E5B869] block">Waterfront</strong>
+                  <span>Opposite Leeds Bridge</span>
+                </div>
+                <div className="p-2 rounded bg-[#181512] border border-[#221E1A]">
+                  <strong className="text-[#E5B869] block">Corn Exchange</strong>
+                  <span>300 yards walking</span>
+                </div>
+                <div className="p-2 rounded bg-[#181512] border border-[#221E1A]">
+                  <strong className="text-[#E5B869] block">LS1 7HG</strong>
+                  <span>Heart of City Centre</span>
+                </div>
+              </div>
             </div>
           </div>
 
