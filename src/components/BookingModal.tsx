@@ -86,7 +86,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
               <div><strong>Party Size:</strong> {partySize} {Number(partySize) === 1 ? 'Guest' : 'Guests'}</div>
             </div>
             <div className="mt-4 text-[11px] text-[#A39A8B] bg-[#221E1A] p-3 rounded border border-[#C99742]/20 text-left">
-              * Design Concept Demo: This reservation is simulated for demonstration purposes. For official reservations, call{' '}{RESTAURANT_INFO.phone}.
+              {`* Design Concept Demo: This reservation is simulated for demonstration purposes. For official reservations, call ${RESTAURANT_INFO.phone}.`}
             </div>
             <button
               onClick={() => {
@@ -195,10 +195,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                 </div>
               </div>
 
+              {/* Exact spacing in call 0113 242 0185 */}
               <div className="p-3 bg-[#1B1815] rounded border border-[#2C2621] text-[11px] text-[#8E8474] flex items-center gap-2">
                 <Info className="w-3.5 h-3.5 text-[#C99742] shrink-0" />
                 <span>
-                  Demo Concept Form · Real bookings call{' '}{RESTAURANT_INFO.phone}
+                  {`Demo Concept Form · Real bookings call ${RESTAURANT_INFO.phone}`}
                 </span>
               </div>
 

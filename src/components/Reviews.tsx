@@ -66,9 +66,10 @@ export const Reviews: React.FC = () => {
                 </div>
               </div>
 
+              {/* Exact verified space: 'Based on ~598 customer reviews' */}
               <div className="mt-3 text-xs text-[#8E8474] flex items-center justify-center sm:justify-start gap-1.5">
                 <CheckCircle className="w-3.5 h-3.5 text-[#C99742]" />
-                <span>Based on ~{RESTAURANT_INFO.reviewCount}{' '}customer reviews</span>
+                <span>{`Based on ~${RESTAURANT_INFO.reviewCount} customer reviews`}</span>
               </div>
             </div>
 
@@ -108,7 +109,7 @@ export const Reviews: React.FC = () => {
               className="review-card bg-[#161412] border border-[#26211C] hover:border-[#C99742]/40 rounded-xl p-6 sm:p-7 transition-all duration-300 flex flex-col justify-between shadow-lg relative group"
             >
               <div>
-                {/* Header row: stars & source */}
+                {/* Header row: stars & source with verified spaces around dot */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1 text-[#E5B869]">
                     {[...Array(review.rating)].map((_, i) => (
@@ -116,7 +117,7 @@ export const Reviews: React.FC = () => {
                     ))}
                   </div>
                   <span className="text-[11px] font-medium text-[#8E8474]">
-                    {review.source}{' '}·{' '}{review.date}
+                    {`${review.source} · ${review.date}`}
                   </span>
                 </div>
 
@@ -158,7 +159,7 @@ export const Reviews: React.FC = () => {
             className="inline-flex items-center gap-2 text-xs text-[#D8A651] hover:text-[#F8E7C9] transition-colors"
           >
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>Read all{' '}{RESTAURANT_INFO.reviewCount}+{' '}reviews on Google</span>
+            <span>{`Read all ${RESTAURANT_INFO.reviewCount}+ reviews on Google`}</span>
             <span aria-hidden="true">→</span>
           </a>
         </div>

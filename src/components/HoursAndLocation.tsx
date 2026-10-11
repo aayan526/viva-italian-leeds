@@ -9,14 +9,14 @@ export const HoursAndLocation: React.FC = () => {
   const [isOpenNow, setIsOpenNow] = useState(false);
 
   // Exact schedule definition matching business data
-  const weeklySchedule = [
-    { day: "Monday", hours: "16:00 – 22:00" },
-    { day: "Tuesday", hours: "16:00 – 22:00" },
-    { day: "Wednesday", hours: "16:00 – 22:00" },
-    { day: "Thursday", hours: "16:00 – 22:00" },
-    { day: "Friday", hours: "12:00 – 22:00" },
-    { day: "Saturday", hours: "12:00 – 22:00" },
-    { day: "Sunday", hours: "14:00 – 21:00" },
+  const scheduleRows = [
+    { day: "Monday", short: "Mon", hours: "16:00–22:00" },
+    { day: "Tuesday", short: "Tue", hours: "16:00–22:00" },
+    { day: "Wednesday", short: "Wed", hours: "16:00–22:00" },
+    { day: "Thursday", short: "Thu", hours: "16:00–22:00" },
+    { day: "Friday", short: "Fri", hours: "12:00–22:00" },
+    { day: "Saturday", short: "Sat", hours: "12:00–22:00" },
+    { day: "Sunday", short: "Sun", hours: "14:00–21:00" },
   ];
 
   useEffect(() => {
@@ -149,7 +149,7 @@ export const HoursAndLocation: React.FC = () => {
                 <span className="text-[11px] text-[#A39A8B] font-cinzel">Leeds LS1</span>
               </div>
 
-              {/* Quick Summary Pill Row matching Footer */}
+              {/* Summary Pill Row matching Footer */}
               <div className="mb-4 grid grid-cols-3 gap-2 p-2.5 bg-[#141210] rounded-lg border border-[#26211C] text-center text-[11px]">
                 <div className="border-r border-[#26211C] pr-1">
                   <div className="text-[#8E8474]">Mon – Thu</div>
@@ -165,29 +165,30 @@ export const HoursAndLocation: React.FC = () => {
                 </div>
               </div>
 
-              {/* Daily Rows: explicitly showing hours for every day including Tue, Wed, Thu, Sat */}
+              {/* Explicit Daily Rows for Monday through Sunday */}
               <div className="divide-y divide-[#221E1A] text-xs">
-                {weeklySchedule.map((schedule) => {
-                  const isToday = schedule.day === currentDayName;
+                {scheduleRows.map((item) => {
+                  const isToday = item.day === currentDayName;
                   return (
                     <div
-                      key={schedule.day}
-                      className={`py-2.5 flex items-center justify-between ${
+                      key={item.day}
+                      className={`py-3 flex items-center justify-between ${
                         isToday
-                          ? 'text-[#E5B869] font-semibold bg-[#221E1A]/60 px-2.5 rounded -mx-1'
+                          ? 'text-[#E5B869] font-semibold bg-[#221E1A]/80 px-3 rounded'
                           : 'text-[#DFD9CC]'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <span>{schedule.day}</span>
+                        <span className="font-semibold text-sm text-[#F8E7C9]">{item.day}</span>
+                        <span className="text-xs text-[#8E8474]">({item.short})</span>
                         {isToday && (
-                          <span className="text-[10px] text-[#C99742] uppercase tracking-wider font-sans">
-                            (Today)
+                          <span className="text-[10px] text-[#C99742] uppercase tracking-wider font-sans bg-[#141210] px-1.5 py-0.5 rounded border border-[#C99742]/30">
+                            Today
                           </span>
                         )}
                       </div>
-                      <span className="font-mono text-xs font-semibold text-[#F8E7C9]">
-                        {schedule.hours}
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[#F8E7C9] bg-[#141210] px-2.5 py-1 rounded border border-[#C99742]/30 shrink-0">
+                        {item.hours}
                       </span>
                     </div>
                   );

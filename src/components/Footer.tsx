@@ -83,10 +83,11 @@ export const Footer: React.FC = () => {
               Italian Restaurant · Bar · Pizzeria located at 9-11 Bridge End, Leeds LS1 7HG. Celebrating traditional Neapolitan stone oven pizzas, handcrafted pasta ribbons, and authentic regional Italian hospitality.
             </p>
 
+            {/* Guaranteed explicit spaces: '4.7 Stars' and '· Over 598 Google Reviews' */}
             <div className="flex items-center gap-2 text-xs text-[#E5B869] pt-2">
               <Star className="w-4 h-4 fill-[#E5B869]" />
-              <span className="font-semibold">{RESTAURANT_INFO.rating}{' '}Stars</span>
-              <span className="text-[#8E8474]">· Over{' '}{RESTAURANT_INFO.reviewCount}{' '}Google Reviews</span>
+              <span className="font-semibold">{`${RESTAURANT_INFO.rating} Stars`}</span>
+              <span className="text-[#8E8474]">{`· Over ${RESTAURANT_INFO.reviewCount} Google Reviews`}</span>
             </div>
           </div>
 
@@ -184,16 +185,18 @@ export const Footer: React.FC = () => {
 
         </div>
 
-        {/* Bottom Line */}
+        {/* Bottom Line - Guaranteed spaces: '© 2026 Viva...' and 'passion for Leeds' */}
         <div className="mt-14 pt-8 border-t border-[#201C18] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E8474]">
           <div>
-            {'© '}{new Date().getFullYear()}{' '}Viva Italian Restaurant Bar & Pizzeria. Design concept demo — not the official website.
+            {`© ${new Date().getFullYear()} Viva Italian Restaurant Bar & Pizzeria. Design concept demo — not the official website.`}
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              Crafted with Italian passion{' '}<Heart className="w-3 h-3 text-red-500 fill-red-500 inline mx-0.5" />{' '}for Leeds
-            </span>
+            <div className="inline-flex items-center gap-1.5">
+              <span>Crafted with Italian passion</span>
+              <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline shrink-0" />
+              <span>for Leeds</span>
+            </div>
             <button
               onClick={scrollToTop}
               className="p-2 rounded bg-[#1C1814] hover:bg-[#2A241E] text-[#DFD9CC] hover:text-[#E5B869] border border-[#2C2621] transition-colors cursor-pointer"

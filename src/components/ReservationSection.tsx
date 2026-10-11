@@ -149,15 +149,15 @@ export const ReservationSection: React.FC = () => {
                 )}
               </div>
 
-              {/* Fictional Demo Disclaimer Callout */}
+              {/* Fictional Demo Disclaimer Callout with guaranteed spaces */}
               <div className="mt-6 p-4 rounded-lg bg-[#221E1A]/80 border border-[#C99742]/30 max-w-lg mx-auto text-xs text-[#DFD9CC] flex items-start gap-3 text-left">
                 <Info className="w-5 h-5 text-[#E5B869] shrink-0 mt-0.5" />
                 <div>
                   <div className="font-semibold text-[#F8E7C9]">Design Concept Showcase Notice</div>
-                  <div className="text-[11px] text-[#A39A8B] mt-0.5">
-                    This is a design concept demo for Viva Italian Restaurant Bar & Pizzeria. No real table was booked. For actual bookings, please call{' '}
+                  <div className="text-[11px] text-[#A39A8B] mt-0.5 leading-relaxed">
+                    <span>{`This is a design concept demo for Viva Italian Restaurant Bar & Pizzeria. No real table was booked. For actual bookings, please call `}</span>
                     <strong className="text-[#E5B869]">{RESTAURANT_INFO.phone}</strong>
-                    {' '}or visit{' '}
+                    <span>{` or visit `}</span>
                     <a href={`https://${RESTAURANT_INFO.officialWebsite}`} target="_blank" rel="noreferrer" className="underline text-[#E5B869]">
                       {RESTAURANT_INFO.officialWebsite}
                     </a>.
@@ -343,11 +343,11 @@ export const ReservationSection: React.FC = () => {
                 />
               </div>
 
-              {/* Disclaimer Notice */}
+              {/* Disclaimer Notice: Explicit spacing in calling 0113 242 0185 */}
               <div className="p-3 bg-[#1A1612] rounded-lg border border-[#C99742]/20 text-[11px] text-[#A39A8B] flex items-center gap-2">
                 <Info className="w-4 h-4 text-[#C99742] shrink-0" />
                 <span>
-                  Demo Concept Form · Real table bookings can be made directly by calling{' '}{RESTAURANT_INFO.phone}.
+                  {`Demo Concept Form · Real table bookings can be made directly by calling ${RESTAURANT_INFO.phone}.`}
                 </span>
               </div>
 
